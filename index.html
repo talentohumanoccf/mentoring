@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentoring Estratégico - Comfamiliar Risaralda</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Mantiene Outfit para consistencia de marca, o usa Inter si se prefiere distinto -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            overflow: hidden;
+            background-color: #f8fafc;
+            /* Slate 50 */
+        }
+
+        /* --- Typography & Readability --- */
+        p,
+        li,
+        .text-slate-500,
+        .text-slate-600 {
+            /* Enforcing better contrast globally where possible */
+            color: #475569;
+            /* Slate 600 - Darker than 500 */
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        .font-bold {
+            letter-spacing: -0.02em;
+            /* Tighten headings for modern look */
+        }
+
+        /* --- Animations --- */
+        .slide {
+            display: none;
+            height: calc(100vh - 64px);
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            animation: slideFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Staggered Animations for Kids */
+        .slide.active .stagger-1 {
+            animation: fadeInUp 0.6s ease-out 0.1s both;
+        }
+
+        .slide.active .stagger-2 {
+            animation: fadeInUp 0.6s ease-out 0.2s both;
+        }
+
+        .slide.active .stagger-3 {
+            animation: fadeInUp 0.6s ease-out 0.3s both;
+        }
+
+        .slide.active .stagger-4 {
+            animation: fadeInUp 0.6s ease-out 0.4s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .step-active {
+            border-color: #3b82f6;
+            color: #60a5fa;
+            opacity: 1;
+        }
+
+        .step-inactive {
+            border-color: #334155;
+            color: #64748b;
+            opacity: 0.6;
+        }
+
+        /* --- Backgrounds --- */
+        .aurora-bg {
+            background:
+                radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.25), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(99, 102, 241, 0.25), transparent 25%),
+                linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            background-size: 200% 200%;
+            animation: auroraMove 15s ease infinite alternate;
+        }
+
+        @keyframes auroraMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        /* --- Glassmorphism --- */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow:
+                0 4px 6px -1px rgba(0, 0, 0, 0.1),
+                0 2px 4px -1px rgba(0, 0, 0, 0.06),
+                inset 0 0 20px rgba(255, 255, 255, 0.5);
+            /* Inner glow */
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.85);
+            transform: translateY(-4px);
+            box-shadow:
+                0 20px 25px -5px rgba(0, 0, 0, 0.1),
+                0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* --- Progress Bar --- */
+        .progress-bar {
+            height: 4px;
+            background: #e2e8f0;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #6366f1);
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Ambient Backgrounds */
+        .bg-grid-slate {
+            background-image:
+                linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+                linear-gradient(to bottom, #e2e8f0 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900">
+
+    <!-- Navegación Ajustada a Fondo Oscuro -->
+    <nav class="bg-slate-900 border-b border-slate-800 h-16 sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-6 h-full flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <!-- Logo Corporativo sobre fondo oscuro -->
+                <div class="bg-white/10 p-1.5 rounded-lg">
+                    <img src="https://i.imgur.com/yyI6FWO.png" alt="Logo Comfamiliar"
+                        class="h-8 object-contain brightness-0 invert">
+                </div>
+                <div class="h-6 w-px bg-slate-700 hidden sm:block"></div>
+                <span class="font-bold text-lg tracking-tight text-white hidden sm:block">Mentoring<span
+                        class="text-blue-400">Estratégico</span></span>
+            </div>
+            <div class="hidden md:flex space-x-8 text-xs font-bold uppercase tracking-widest text-slate-400">
+                <button onclick="goToSlide(0)" class="nav-link hover:text-white transition py-2"
+                    id="nav-0">Inicio</button>
+                <button onclick="goToSlide(1)" class="nav-link hover:text-white transition py-2"
+                    id="nav-1">Piloto</button>
+                <button onclick="goToSlide(2)" class="nav-link hover:text-white transition py-2" id="nav-2">Ruta
+                    Estratégica</button>
+                <button onclick="goToSlide(3)" class="nav-link hover:text-white transition py-2"
+                    id="nav-3">OKRs</button>
+            </div>
+        </div>
+    </nav>
+
+    <main id="slide-container" class="relative">
+
+        <!-- SLIDE 1: INICIO -->
+        <section id="slide-0" class="slide active aurora-bg text-white relative overflow-hidden">
+            <!-- Decorative background elements -->
+            <div
+                class="absolute top-0 right-0 w-2/3 h-full bg-blue-500/10 blur-[100px] rounded-full transform translate-x-1/3 -translate-y-1/3 pointer-events-none">
+            </div>
+            <div
+                class="absolute bottom-0 left-0 w-1/2 h-2/3 bg-indigo-500/10 blur-[80px] rounded-full transform -translate-x-1/4 translate-y-1/4 pointer-events-none">
+            </div>
+
+            <div
+                class="max-w-7xl mx-auto px-6 py-12 flex flex-col md:flex-row items-center h-full gap-12 relative z-10 justify-center">
+                <div class="md:w-1/2 text-left space-y-8 stagger-1">
+                    <span
+                        class="bg-white/10 backdrop-blur-md text-blue-200 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest inline-block border border-white/20 shadow-lg">Innovación
+                        Institucional</span>
+                    <h1 class="text-5xl md:text-7xl font-extrabold leading-tight tracking-tight drop-shadow-2xl">
+                        Conectando <br>
+                        <span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-indigo-200 to-white">Saberes.</span>
+                    </h1>
+                    <p class="text-xl text-blue-100/90 leading-relaxed max-w-xl font-light drop-shadow-md">
+                        Transformando el futuro de Comfamiliar Risaralda a través de duplas de alto impacto.
+                    </p>
+                    <div class="flex gap-4 pt-4 stagger-2">
+                        <button onclick="goToSlide(1)"
+                            class="bg-white text-blue-900 px-8 py-4 rounded-xl font-bold transition flex items-center shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] hover:-translate-y-1 transform duration-300 border border-white/50">
+                            Explorar Propuesta <i data-lucide="chevron-right" class="ml-2 w-5 h-5"></i>
+                        </button>
+                        <a href="index.html"
+                            class="px-8 py-4 rounded-xl font-bold text-white hover:bg-white/10 transition flex items-center border border-white/20 backdrop-blur-md shadow-lg hover:shadow-white/20 hover:-translate-y-1 transform duration-300">
+                            Ir al App
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center perspective-1000 stagger-3">
+                    <div class="relative group transform hover:rotate-1 transition-transform duration-700">
+                        <div
+                            class="absolute -inset-4 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition duration-1000 animate-pulse">
+                        </div>
+                        <img src="https://i.imgur.com/9RYlUP4.png" alt="Campaña Mentoring"
+                            class="relative rounded-3xl shadow-2xl max-h-[500px] object-cover border border-white/10 ring-1 ring-white/20">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 2: FASES CONCEPTUALES -->
+        <section id="slide-1" class="slide bg-slate-50 justify-center overflow-hidden">
+            <!-- Background Texture -->
+            <div class="absolute inset-0 bg-grid-slate opacity-60 pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto px-6 py-16 w-full relative z-10">
+                <div class="text-center mb-16 stagger-1">
+                    <h2 class="text-4xl font-extrabold text-slate-800 mb-4 tracking-tight">Mística del Programa</h2>
+                    <p class="text-xl text-slate-600 max-w-2xl mx-auto">Un ecosistema de aprendizaje estructurado para
+                        las <span
+                            class="text-blue-600 font-bold bg-blue-50 px-2 py-0.5 rounded-lg border border-blue-100">10
+                            Duplas Piloto</span></p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <!-- Phase Cards with Glassmorphism -->
+                    <div
+                        class="glass-card p-8 rounded-3xl text-center transition-all duration-300 group stagger-2 border-t-4 border-t-blue-500">
+                        <div
+                            class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-inner group-hover:scale-110 transition-transform duration-500">
+                            <i data-lucide="sprout" class="w-8 h-8 text-blue-600"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-800 mb-3 group-hover:text-blue-600 transition-colors">1.
+                            Semilla</h4>
+                        <p class="text-sm text-slate-600 leading-relaxed">Convocatoria y selección de mentores con
+                            trayectoria con mentees de alto potencial.</p>
+                    </div>
+
+                    <div
+                        class="glass-card p-8 rounded-3xl text-center transition-all duration-300 group stagger-3 border-t-4 border-t-indigo-500">
+                        <div
+                            class="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-inner group-hover:scale-110 transition-transform duration-500">
+                            <i data-lucide="flame" class="w-8 h-8 text-indigo-600"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-800 mb-3 group-hover:text-indigo-600 transition-colors">
+                            2. Alquimia</h4>
+                        <p class="text-sm text-slate-600 leading-relaxed"><strong>HITO:</strong> Matchmaking
+                            inteligente. Cruce de habilidades y química profesional.</p>
+                    </div>
+
+                    <div
+                        class="glass-card p-8 rounded-3xl text-center transition-all duration-300 group stagger-4 border-t-4 border-t-emerald-500">
+                        <div
+                            class="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-inner group-hover:scale-110 transition-transform duration-500">
+                            <i data-lucide="map" class="w-8 h-8 text-emerald-600"></i>
+                        </div>
+                        <h4
+                            class="text-xl font-bold text-slate-800 mb-3 group-hover:text-emerald-600 transition-colors">
+                            3. Travesía</h4>
+                        <p class="text-sm text-slate-600 leading-relaxed">Desarrollo de 6 sesiones de mentoría guiada
+                            con soporte continuo.</p>
+                    </div>
+
+                    <div class="glass-card p-8 rounded-3xl text-center transition-all duration-300 group stagger-1 border-t-4 border-t-amber-500"
+                        style="animation-delay: 0.5s;">
+                        <div
+                            class="w-16 h-16 bg-amber-50 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-inner group-hover:scale-110 transition-transform duration-500">
+                            <i data-lucide="scroll" class="w-8 h-8 text-amber-600"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-800 mb-3 group-hover:text-amber-600 transition-colors">
+                            4. Legado</h4>
+                        <p class="text-sm text-slate-600 leading-relaxed">Evaluación de impacto, feedback cruzado y
+                            graduación de la cohorte.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 3: CRONOGRAMA ESTRATÉGICO (GANTT) -->
+        <section id="slide-2" class="slide bg-slate-50 justify-center">
+            <div class="max-w-7xl mx-auto px-6 py-12 w-full">
+                <div class="text-center mb-12 stagger-1">
+                    <h2 class="text-3xl font-extrabold text-slate-800 tracking-tight">Ruta de Avance Estratégica</h2>
+                    <p class="text-slate-600 mt-2">Cronograma de ejecución para las 10 Duplas Piloto</p>
+                </div>
+
+                <!-- GANTT CONTAINER -->
+                <div
+                    class="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-white/50 overflow-hidden relative stagger-2">
+                    <!-- Grid Background -->
+                    <div class="absolute inset-0 bg-grid-slate opacity-40"></div>
+
+                    <!-- Timeline Header -->
+                    <div class="grid grid-cols-6 gap-4 mb-8 relative z-10 border-b border-slate-200 pb-4">
+                        <div class="text-center"><span
+                                class="text-xs font-bold uppercase text-slate-500 tracking-widest">Mes 01</span></div>
+                        <div class="text-center"><span
+                                class="text-xs font-bold uppercase text-slate-500 tracking-widest">Mes 02</span></div>
+                        <div class="text-center"><span
+                                class="text-xs font-bold uppercase text-slate-500 tracking-widest">Mes 03</span></div>
+                        <div class="text-center"><span
+                                class="text-xs font-bold uppercase text-slate-500 tracking-widest">Mes 04</span></div>
+                        <div class="text-center"><span
+                                class="text-xs font-bold uppercase text-slate-500 tracking-widest">Mes 05</span></div>
+                        <div class="text-center"><span
+                                class="text-xs font-bold uppercase text-slate-500 tracking-widest">Mes 06</span></div>
+                    </div>
+
+                    <!-- Timeline Lanes -->
+                    <div class="space-y-6 relative z-10">
+
+                        <!-- Phase 1: Semilla -->
+                        <div class="grid grid-cols-6 gap-4 items-center group">
+                            <div class="col-span-1 relative">
+                                <div
+                                    class="h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl shadow-lg shadow-blue-500/20 flex items-center px-4 text-white transform group-hover:scale-105 transition-transform cursor-pointer relative overflow-hidden border border-blue-400/50">
+                                    <div
+                                        class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000">
+                                    </div>
+                                    <div class="bg-white/20 p-2 rounded-lg mr-3 backdrop-blur-sm">
+                                        <i data-lucide="sprout" class="w-5 h-5"></i>
+                                    </div>
+                                    <div class="leading-tight">
+                                        <div class="text-[10px] font-bold opacity-80 uppercase tracking-wider">Fase 1
+                                        </div>
+                                        <div class="font-bold text-sm">Semilla</div>
+                                    </div>
+                                </div>
+                                <!-- Popover -->
+                                <div
+                                    class="absolute top-20 left-0 bg-slate-900 text-white p-5 rounded-xl shadow-2xl w-72 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-30 border border-slate-500 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                                    <p class="text-xs text-blue-200 mb-3 font-bold uppercase tracking-wider">Actividades
+                                        Clave:</p>
+                                    <ul class="text-sm space-y-2 text-slate-100 font-medium">
+                                        <li class="flex items-start"><i data-lucide="check-circle-2"
+                                                class="w-4 h-4 mr-2 mt-0.5 text-blue-400"></i>Lanzamiento de Campaña
+                                        </li>
+                                        <li class="flex items-start"><i data-lucide="check-circle-2"
+                                                class="w-4 h-4 mr-2 mt-0.5 text-blue-400"></i>Selección de perfiles
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Phase 2: Alquimia -->
+                        <div class="grid grid-cols-6 gap-4 items-center group">
+                            <div class="col-start-2 col-span-1 relative">
+                                <div
+                                    class="h-16 bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-2xl shadow-lg shadow-indigo-500/20 flex items-center px-4 text-white transform group-hover:scale-105 transition-transform cursor-pointer relative border border-indigo-400/50">
+                                    <div
+                                        class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-amber-400 text-amber-900 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md animate-bounce border border-amber-300">
+                                        ★ HITO
+                                    </div>
+                                    <div class="bg-white/20 p-2 rounded-lg mr-3 backdrop-blur-sm">
+                                        <i data-lucide="flame" class="w-5 h-5"></i>
+                                    </div>
+                                    <div class="leading-tight">
+                                        <div class="text-[10px] font-bold opacity-80 uppercase tracking-wider">Fase 2
+                                        </div>
+                                        <div class="font-bold text-sm">Alquimia</div>
+                                    </div>
+                                </div>
+                                <div
+                                    class="absolute top-20 left-0 bg-slate-900 text-white p-5 rounded-xl shadow-2xl w-72 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-30 border border-slate-500 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                                    <p class="text-xs text-indigo-200 mb-3 font-bold uppercase tracking-wider">
+                                        Actividades Clave:</p>
+                                    <ul class="text-sm space-y-2 text-slate-100 font-medium">
+                                        <li class="flex items-start"><i data-lucide="check-circle-2"
+                                                class="w-4 h-4 mr-2 mt-0.5 text-indigo-400"></i>Matchmaking
+                                            Inteligente</li>
+                                        <li class="flex items-start"><i data-lucide="check-circle-2"
+                                                class="w-4 h-4 mr-2 mt-0.5 text-indigo-400"></i>Kick-off de las 10
+                                            Duplas</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Phase 3: Travesía -->
+                        <div class="grid grid-cols-6 gap-4 items-center group">
+                            <div class="col-start-3 col-span-3 relative">
+                                <div
+                                    class="h-16 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-2xl shadow-lg shadow-emerald-500/20 flex items-center px-4 text-white transform group-hover:scale-[1.02] transition-transform cursor-pointer border border-emerald-400/50">
+                                    <div class="bg-white/20 p-2 rounded-lg mr-3 backdrop-blur-sm">
+                                        <i data-lucide="map" class="w-5 h-5"></i>
+                                    </div>
+                                    <div class="leading-tight">
+                                        <div class="text-[10px] font-bold opacity-80 uppercase tracking-wider">Fase 3
+                                        </div>
+                                        <div class="font-bold text-sm">Travesía (Sesiones Guiadas)</div>
+                                    </div>
+                                    <div class="ml-auto flex -space-x-2">
+                                        <div
+                                            class="w-7 h-7 rounded-full bg-white/20 border border-white/40 flex items-center justify-center text-[10px] font-bold shadow-sm">
+                                            1</div>
+                                        <div
+                                            class="w-7 h-7 rounded-full bg-white/20 border border-white/40 flex items-center justify-center text-[10px] font-bold shadow-sm">
+                                            2</div>
+                                        <div
+                                            class="w-7 h-7 rounded-full bg-white/20 border border-white/40 flex items-center justify-center text-[10px] font-bold shadow-sm">
+                                            3</div>
+                                        <div
+                                            class="w-7 h-7 rounded-full bg-slate-900/40 border border-white/40 flex items-center justify-center text-[10px] font-bold text-white shadow-sm backdrop-blur-sm">
+                                            +</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Phase 4: Legado -->
+                        <div class="grid grid-cols-6 gap-4 items-center group">
+                            <div class="col-start-6 col-span-1 relative">
+                                <div
+                                    class="h-16 bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl shadow-lg shadow-amber-500/20 flex items-center px-4 text-white transform group-hover:scale-105 transition-transform cursor-pointer border border-amber-400/50">
+                                    <div class="bg-white/20 p-2 rounded-lg mr-3 backdrop-blur-sm">
+                                        <i data-lucide="scroll" class="w-5 h-5"></i>
+                                    </div>
+                                    <div class="leading-tight">
+                                        <div class="text-[10px] font-bold opacity-80 uppercase tracking-wider">Fase 4
+                                        </div>
+                                        <div class="font-bold text-sm">Legado</div>
+                                    </div>
+                                </div>
+                                <!-- Celebration Particles Hint -->
+                                <div
+                                    class="absolute -top-3 -right-3 text-amber-500 opacity-0 group-hover:opacity-100 transition-opacity animate-pulse">
+                                    <i data-lucide="party-popper" class="w-8 h-8 drop-shadow-md"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vertical Guides -->
+                    <div class="absolute inset-0 grid grid-cols-6 gap-4 pointer-events-none z-0 px-8">
+                        <div class="border-r border-slate-200/60 h-full dashed"></div>
+                        <div class="border-r border-slate-200/60 h-full dashed"></div>
+                        <div class="border-r border-slate-200/60 h-full dashed"></div>
+                        <div class="border-r border-slate-200/60 h-full dashed"></div>
+                        <div class="border-r border-slate-200/60 h-full dashed"></div>
+                    </div>
+                </div>
+
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 stagger-3">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
+                        <div class="p-3 bg-indigo-50 text-indigo-600 rounded-xl">
+                            <i data-lucide="flag" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-800">Hitos de Control</h4>
+                            <p class="text-sm text-slate-600 mt-1">Cada mes incluye un punto de chequeo de OKRs para
+                                asegurar la alineación estratégica.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
+                        <div class="p-3 bg-emerald-50 text-emerald-600 rounded-xl">
+                            <i data-lucide="users" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-800">Soporte Transversal</h4>
+                            <p class="text-sm text-slate-600 mt-1">El equipo de Gestión Humana acompañará todo el
+                                proceso con recursos y herramientas.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SLIDE 4: OKRs -->
+        <section id="slide-3" class="slide bg-slate-50 justify-center">
+            <div class="max-w-7xl mx-auto px-6 py-16 w-full relative z-10">
+                <div class="text-center mb-16 stagger-1">
+                    <span class="text-blue-600 font-bold uppercase tracking-widest text-sm mb-2 block">Impacto
+                        Real</span>
+                    <h2 class="text-4xl font-extrabold text-slate-900 tracking-tight">Metodología de Medición</h2>
+                    <p class="text-slate-600 max-w-xl mx-auto mt-4 text-lg">Nuestros OKRs aseguran que el mentoring no
+                        sea solo una charla, sino un motor de cambio real.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Cards with Glassmorphism -->
+                    <div
+                        class="glass-card p-10 rounded-[2rem] text-center transition-all duration-300 stagger-2 hover:border-blue-300">
+                        <div
+                            class="w-20 h-20 bg-blue-100 text-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-sm">
+                            <i data-lucide="target" class="w-10 h-10"></i>
+                        </div>
+                        <h4 class="text-slate-900 font-bold text-2xl mb-4">Objetivos</h4>
+                        <p class="text-slate-600 leading-relaxed">Metas aspiracionales de modernización definidas
+                            cuidadosamente por cada área estratégica.</p>
+                    </div>
+
+                    <div
+                        class="glass-card p-10 rounded-[2rem] text-center transition-all duration-300 stagger-3 hover:border-indigo-300">
+                        <div
+                            class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-sm">
+                            <i data-lucide="bar-chart-3" class="w-10 h-10"></i>
+                        </div>
+                        <h4 class="text-slate-900 font-bold text-2xl mb-4">Key Results (KRs)</h4>
+                        <p class="text-slate-600 leading-relaxed">Resultados cuantificables que evidencian la
+                            transferencia técnica exitosa y medible.</p>
+                    </div>
+
+                    <div
+                        class="glass-card p-10 rounded-[2rem] text-center transition-all duration-300 stagger-4 hover:border-emerald-300">
+                        <div
+                            class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-sm">
+                            <i data-lucide="rocket" class="w-10 h-10"></i>
+                        </div>
+                        <h4 class="text-slate-900 font-bold text-2xl mb-4">Iniciativas</h4>
+                        <p class="text-slate-600 leading-relaxed">Proyectos reales derivados del aprendizaje conjunto
+                            entre mentor y mentee.</p>
+                    </div>
+                </div>
+
+                <div class="mt-20 text-center stagger-4">
+                    <button onclick="goToSlide(0)"
+                        class="group text-slate-500 hover:text-blue-600 font-bold flex items-center mx-auto text-sm transition-colors uppercase tracking-widest px-6 py-3 rounded-full hover:bg-white hover:shadow-lg">
+                        <i data-lucide="rotate-ccw"
+                            class="mr-2 w-4 h-4 group-hover:-rotate-180 transition-transform duration-500"></i>
+                        Volver al Inicio
+                    </button>
+                    <p class="mt-8 text-xs text-slate-400 font-medium">Gestión Humana y Desarrollo &copy; 2025</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Navigation Controls -->
+    <div class="fixed bottom-8 right-8 flex space-x-4 z-50">
+        <button id="prev-btn" onclick="prevSlide()"
+            class="p-4 bg-white border border-slate-200 text-slate-400 rounded-full shadow-lg hover:text-blue-600 hover:scale-105 transition disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
+            <i data-lucide="arrow-left" class="w-6 h-6"></i>
+        </button>
+        <button id="next-btn" onclick="nextSlide()"
+            class="p-4 bg-blue-600 text-white rounded-full shadow-lg shadow-blue-500/30 hover:bg-blue-700 hover:scale-105 transition disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
+            <i data-lucide="arrow-right" class="w-6 h-6"></i>
+        </button>
+    </div>
+
+    <div class="progress-bar">
+        <div id="progress-fill" class="progress-fill" style="width: 25%;"></div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        let currentSlide = 0;
+        const totalSlides = 4;
+
+        function updateUI() {
+            // Manage Slides
+            document.querySelectorAll('.slide').forEach((s, idx) => {
+                const isActive = idx === currentSlide;
+                s.classList.toggle('active', isActive);
+                if (isActive) {
+                    // Reset scroll on slide change
+                    s.scrollTop = 0;
+                }
+            });
+
+            // Manage Nav Links
+            document.querySelectorAll('.nav-link').forEach((link, idx) => {
+                if (idx === currentSlide) {
+                    link.classList.add('text-blue-400');
+                    link.classList.remove('text-slate-400');
+                } else {
+                    link.classList.remove('text-blue-400');
+                    link.classList.add('text-slate-400');
+                }
+            });
+
+            // Update Progress Bar
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            document.getElementById('progress-fill').style.width = `${progress}%`;
+
+            // Update Buttons State
+            document.getElementById('prev-btn').disabled = currentSlide === 0;
+            document.getElementById('next-btn').disabled = currentSlide === totalSlides - 1;
+
+            lucide.createIcons();
+        }
+
+        function goToSlide(n) {
+            currentSlide = n;
+            updateUI();
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateUI();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateUI();
+            }
+        }
+
+        function goToPhase(phaseNumber) {
+            // Hide all contents
+            const contents = document.querySelectorAll('.phase-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            // Reset all buttons style
+            const buttons = document.querySelectorAll('.phase-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('step-active', 'border-blue-500', 'shadow-md');
+                btn.classList.add('step-inactive', 'hover:bg-slate-50');
+                // Reset arrow icon
+                const arrow = btn.querySelector('.lucide-arrow-right');
+                if (arrow) arrow.style.opacity = '0';
+            });
+
+            // Activate Selected
+            const selectedContent = document.getElementById(`content-phase-${phaseNumber}`);
+            if (selectedContent) selectedContent.classList.add('active');
+
+            const activeBtn = document.getElementById(`btn-phase-${phaseNumber}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('step-inactive', 'hover:bg-slate-50');
+                activeBtn.classList.add('step-active', 'border-blue-500', 'shadow-md');
+                // Show arrow icon
+                const arrow = activeBtn.querySelector('.lucide-arrow-right');
+                if (arrow) arrow.style.opacity = '1';
+            }
+
+            lucide.createIcons();
+        }
+
+        // Keyboard Support
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Initialize
+        updateUI();
+    </script>
+</body>
+
+</html>
